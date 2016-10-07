@@ -63,7 +63,6 @@ public class Triangle extends Shape{
 		return area;
 	}
 
-
 	public String toString(){
 		String x = String.format("A Triangle with sides = %.3f, %,3f, %.3f, which is a subclass of ", side1, side2, side3) + super.toString();
 		return x;
