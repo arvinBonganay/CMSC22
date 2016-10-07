@@ -11,6 +11,9 @@ public abstract class Shape{
 		this.color = color;
 		this.filled = filled;
 	}
+	
+	public abstract double getArea();
+	public abstract double getPerimeter();
 
 	public String getColor(){
 		return color;
@@ -27,10 +30,6 @@ public abstract class Shape{
 	public void setFilled(boolean filled){
 		this.filled = filled;
 	}
-
-
-	public abstract double getArea();
-	public abstract double getPerimeter();
 
 	public String toString(){
 		String x = "A Shape with color of " + color + " and is ";
