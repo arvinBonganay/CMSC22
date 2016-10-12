@@ -1,45 +1,16 @@
-import java.util.*;
-import java.lang.*;
 
-public class Circle extends Shape{
-	private double radius = 1.0;
+public class Circle implements GeometricObject{
 
-	public Circle(){
-		radius = 1.0;
-	} 
+	protected double radius = 1.0;
 
 	public Circle(double radius){
-		if(radius <= 0)
-			throw new IllegalArgumentException("Length of radius should be greater than 0");
 		this.radius = radius;
-	}
-
-	public Circle(double radius, String color, boolean filled){
-		super(color, filled);
-	}
-
-	public double getRadius(){
-		return radius;
-	}
-
-	public void setRadius(double radius){
-		if(radius <= 0)
-			throw new IllegalArgumentException("Length of radius should be greater than 0");
-		this.radius = radius;
-	}
-
-	public double getArea(){
-		double area = radius * radius * Math.PI;
-		return area;
 	}
 
 	public double getPerimeter(){
-		double perimeter = 2 * Math.PI * radius;
-		return perimeter;
+		return 2 * Math.PI * radius;
 	}
-
-	public String toString(){
-		String x = String.format("A Circle with radius = %.3f, which is a subclass of ", radius) + super.toString();
-		return x;
+	public double getArea(){
+		return Math.PI * radius * radius;
 	}
 }
