@@ -1,0 +1,46 @@
+
+public class Circle implements GeometricObject{
+
+	protected double radius = 1.0;
+
+	public Circle(double radius){
+		this.radius = radius;
+	}
+
+	public double getPerimeter(){
+		return 2 * Math.PI * radius;
+	}
+	public double getArea(){
+		return Math.PI * radius * radius;
+	}
+}
+public class Geometric{
+	public static void main(String[] args){
+		GeometricObject g = new 
+	}
+}
+
+
+
+
+
+public interface GeometricObject{
+	
+	public double getPerimeter();
+	public double getArea();
+}
+public interface Resizeable{
+
+	public void resize(int percent);
+}
+public class ResizeableCircle extends Circle implements Resizeable{
+
+	public ResizeableCircle(double r){
+		super(r);
+	}
+	public void resize(int percent){
+		double x = radius * percent;
+		radius = radius + x;
+	}
+}
+
