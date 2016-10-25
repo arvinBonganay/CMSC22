@@ -1,0 +1,223 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+
+
+public class rpcls extends Frame{
+	private String[] opt = {"rock", "paper", "scissors", "lizard", "spock"};
+	private String cTurn;
+	private String pTurn;
+
+	private int cScore = 0;
+	private int pScore = 0;
+
+	private Label l1;
+	private CheckboxGroup choiceGrp;
+	private Button play;
+	private TextArea result;
+	
+
+
+	public rpcls(){
+		//setLayout(new GridLayout(2, 2, 0, 0));
+		setLayout(new FlowLayout(FlowLayout.CENTER));
+		l1 = new Label("Your Choice:");
+		
+		choiceGrp = new CheckboxGroup();
+		Checkbox rock = new Checkbox(opt[0], choiceGrp, true); // set rock as Default turn
+		Checkbox paper = new Checkbox(opt[1], choiceGrp, false);
+		Checkbox scissors = new Checkbox(opt[2], choiceGrp, false);
+		Checkbox lizard = new Checkbox(opt[3], choiceGrp, false);
+		Checkbox spock = new Checkbox(opt[4], choiceGrp, false);
+		
+		result = new TextArea("Result:\n", 5, 60, TextArea.SCROLLBARS_NONE);
+        result.setEditable(false);
+        
+        Label l2 = new Label("Player's Score: ");
+        TextField score1 = new TextField("0", 25);
+        score1.setEditable(false);
+
+        Label l3 = new Label("Computer's Score: ");
+        TextField score2 = new TextField("0", 25);
+        score2.setEditable(false);
+
+		play = new Button("Rock Paper Scissors Lizard Spock!!!");
+		play.setBackground(Color.GRAY);
+		play.setFont(new Font(Font.SERIF, Font.BOLD, 20));
+		play.addActionListener(new ActionListener() {
+            @Override	
+            public void actionPerformed(ActionEvent e) {
+                cTurn = compTurn();
+        		pTurn= choiceGrp.getSelectedCheckbox().getLabel();
+
+        		String msg1 = "Player choose " + pTurn.toUpperCase();
+        		int start1 = 8;
+        		int end1 = start1 + msg1.length();
+        		result.replaceRange(msg1, start1, end1);
+
+        		String msg2 = "\nComputer choose " + cTurn.toUpperCase();
+        		int start2 = end1;
+        		int end2 = start2 + msg2.length();
+        		result.replaceRange(msg2, start2, end2);
+        		
+        		String win = winner(pTurn, cTurn);
+        		String msg3 = "\n\n" +  win.toUpperCase(); 
+        		if (!msg3.equals("\n\nDRAW")){
+        			msg3 = msg3 + " WIN THIS ROUND";
+        		}
+        		int start3 = end2;
+        		int end3 = start3 + msg3.length() + 21;
+        		result.replaceRange(msg3, start3, end3);
+        	 	if (win.equals("player")){
+        	 		pScore++;
+        	 		score1.setText(Integer.toString(pScore));
+        	 	} 
+
+        	 	if (win.equals("computer")){
+        	 		cScore++;
+        	 		score2.setText(Integer.toString(cScore));
+        	 	} 
+
+        	 	if(pScore == 5 || cScore == 5){
+        	 		setVisible(false); 
+        	 		popUp(win);
+        	 	}
+        	 	
+            }
+        });		
+              
+        Panel p1 = new Panel();
+        p1.add(l1);
+        p1.add(rock);
+        p1.add(paper);
+        p1.add(scissors);
+        p1.add(lizard);
+        p1.add(spock);
+        add(p1);
+
+        Panel p2 = new Panel();
+        p2.add(play);
+        add(p2);
+
+		add(result);
+		
+		Panel p3 = new Panel();
+		p3.add(l2);
+		p3.add(score1);
+		p3.add(l3);
+		p3.add(score2);
+		add(p3);
+		
+		setSize(775, 350);
+		setFont(new Font (Font.SERIF, Font.	ROMAN_BASELINE, 17));
+		setResizable(false);
+		setVisible(true);
+
+		// close window
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });        
+	}
+
+	// randomize the move of the computer
+	public String compTurn(){
+		Random r = new Random();
+		int index = r.nextInt(4);
+		return opt[index];
+	}
+
+	public void popUp(String winner){
+		Frame frame = new Frame("");		    
+
+		Dialog d = new Dialog(frame, "GameOver");
+		d.setSize(200, 200);
+		d.setVisible(true);
+		d.setLayout(new FlowLayout(FlowLayout.CENTER));
+		d.add( "NORTH", new Label(winner + " WINS!!"));
+
+		 d.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent windowEvent){
+                System.exit(0);
+            }
+         });
+
+        Panel p = new Panel();
+		p.setLayout(new GridLayout(0, 2));
+		Button retry = new Button("Play Again");
+		retry.addActionListener(new ActionListener() {
+            @Override	
+            public void actionPerformed(ActionEvent e) {
+           		new rpcls();
+            }
+        });
+        d.add(retry);
+
+      	Button close = new Button("Exit");
+		close.addActionListener(new ActionListener() {
+            @Override	
+            public void actionPerformed(ActionEvent e) {
+           		System.exit(0);
+            }
+        });
+        p.add(close);
+        d.add(p);
+
+		
+
+
+	}
+
+	public String winner(String player, String computer){
+		if (computer.equals(player)){
+			return "draw";
+		}
+
+		if (player.equals("rock")){
+			if (computer.equals("lizard") || computer.equals("scissors")){
+				return "player";
+			} else {
+				return "computer";
+			}
+		}
+
+		if (player.equals("paper")){
+			if (computer.equals("rock") || computer.equals("spock")){
+				return "player";
+			} else {
+				return "computer";
+			}
+		}
+
+		if (player.equals("scissors")){
+			if (computer.equals("lizard") || computer.equals("paper")){
+				return "player";
+			} else {
+				return "computer";
+			}
+		}
+
+		if (player.equals("lizard")){
+			if (computer.equals("paper") || computer.equals("spock")){
+				return "player";
+			} else {
+				return "computer";
+			}
+		}
+
+		if (player.equals("spock")){
+			if (computer.equals("rock") || computer.equals("scissors")){
+				return "player";
+			} else {
+				return "computer";
+			}
+		}
+		return "";	
+	}
+
+	public static void main(String[] args){
+		new rpcls();
+
+	}
+}
