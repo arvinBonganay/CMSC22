@@ -1,8 +1,3 @@
-package mp;
-
-/**
- * Created by thegi on 07/12/2016.
- */
 
 public class Rule30Threaded {
     int size;
@@ -28,6 +23,7 @@ public class Rule30Threaded {
         }
         int rangePerThread = size / numOfThreads;
         String prevGen = rule30;
+        System.out.println(prevGen);
         ThreadedGeneration[] threads = new ThreadedGeneration[numOfThreads];
         int start;
         for (int i = 0; i < size - 1; i++){
@@ -36,7 +32,7 @@ public class Rule30Threaded {
                   threads[t] = new ThreadedGeneration(prevGen, start, start + rangePerThread);
                     start = start + rangePerThread;
             }
-            threads[numOfThreads - 1] = new ThreadedGeneration(prevGen, start, size - 1);
+            threads[numOfThreads - 1] = new ThreadedGeneration(prevGen, start, size);
 
             for (int s = 0; s < numOfThreads; s++){
                 threads[s].start();
@@ -51,19 +47,12 @@ public class Rule30Threaded {
                     }
                 }
             }
-//            System.out.print(prevGen);
             prevGen = "";
             for (int r = 0; r < numOfThreads; r++){
                 prevGen += threads[r].getResult();
             }
-//            System.out.print(prevGen);
-            rule30 += "\n" + prevGen;
+	    System.out.println(prevGen);
         }
-    }
-
-
-    public String getResult(){
-        return rule30;
     }
 
 }

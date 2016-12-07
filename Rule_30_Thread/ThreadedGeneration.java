@@ -1,8 +1,3 @@
-package mp;
-
-/**
- * Created by thegi on 07/12/2016.
- */
 public class ThreadedGeneration extends Thread {
     String prevGen, result = "";
     int start, end;
@@ -31,8 +26,8 @@ public class ThreadedGeneration extends Thread {
             } else if (i == prevGen.length() - 1){
                 result += rule(prevGen.substring(i - 1) +  "0");
             } else {
-                result += rule(prevGen.substring(i - 1, i + 2));
-            }
+                result += rule(prevGen.substring(i - 1, i + 2)) ;
+            }			
         }
     }
 

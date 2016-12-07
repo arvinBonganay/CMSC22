@@ -1,7 +1,4 @@
-/**
- * Created by thegi on 07/12/2016.
- */
-package mp;
+
 public class Rule30NonThreaded {
     String rule30 = "";
     private int size;
@@ -32,6 +29,7 @@ public class Rule30NonThreaded {
 
     public void generations(){
         String currentRow = rule30;
+	System.out.println(currentRow);
         for (int i = 0; i < size - 1; i++){
             String resultRow = "";
             for (int j = 0; j < size; j++){
@@ -44,6 +42,7 @@ public class Rule30NonThreaded {
                 }
             }
             currentRow = resultRow;
+            System.out.println(currentRow);
             rule30 += ("\n" + resultRow);
         }
     }
